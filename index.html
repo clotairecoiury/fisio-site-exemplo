@@ -417,33 +417,89 @@
             color: var(--white) !important;
         }
 
+        /* ===================================================
+           HAMBÚRGUER MINIMALISTA — DUAS LINHAS
+           =================================================== */
         .hamburger {
             display: none;
             cursor: pointer;
             flex-direction: column;
-            justify-content: space-between;
-            width: 26px;
-            height: 18px;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 7px;
+            width: 30px;
+            height: 22px;
             position: relative;
             z-index: 1001;
+            background: transparent;
+            border: none;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .bar {
-            height: 2.5px;
-            width: 100%;
+        .hamburger .bar {
+            display: block;
+            height: 2px;
             background-color: var(--navy);
-            border-radius: 4px;
-            transition: var(--transition);
+            border-radius: 2px;
+            transition:
+                transform 0.4s var(--ease-out),
+                width 0.35s var(--ease-out),
+                opacity 0.3s var(--ease),
+                background-color 0.3s var(--ease);
+            transform-origin: center;
+        }
+
+        /* Duas linhas: uma longa, uma curta */
+        .hamburger .bar:nth-child(1) {
+            width: 30px;
+        }
+
+        .hamburger .bar:nth-child(2) {
+            width: 20px;
+        }
+
+        /* Terceira barra (existe no HTML) fica oculta */
+        .hamburger .bar:nth-child(3) {
+            display: none;
+        }
+
+        /* Hover: alinha os tamanhos */
+        .hamburger:hover .bar:nth-child(2) {
+            width: 30px;
+        }
+
+        /* Estado ativo: vira X */
+        .hamburger.active {
+            gap: 0;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            width: 26px;
+            transform: rotate(45deg) translateY(1px);
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            width: 26px;
+            transform: rotate(-45deg) translateY(-1px);
         }
 
         /* ===================================================
-           HERO — COMPACTA
+           HERO — COM BACKGROUND PERSONALIZADO
            =================================================== */
         .hero {
             padding: 7.5rem 0 3.5rem;
-            background: var(--cream);
             position: relative;
             overflow: hidden;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(253, 251, 247, 0.96) 0%,
+                    rgba(253, 251, 247, 0.86) 45%,
+                    rgba(253, 251, 247, 0.55) 100%
+                ),
+                url("img/hero-background.png") center center / cover no-repeat;
         }
 
         .hero::before {
@@ -2276,9 +2332,6 @@
                 text-align: center;
                 justify-content: center;
             }
-            .hamburger.active .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 7px); }
-            .hamburger.active .bar:nth-child(2) { opacity: 0; }
-            .hamburger.active .bar:nth-child(3) { transform: rotate(-45deg) translate(5px, -7px); }
             .values-grid { grid-template-columns: 1fr 1fr; }
             .services-grid { grid-template-columns: 1fr 1fr; }
             .contact-info-grid { grid-template-columns: 1fr; }
@@ -2480,6 +2533,39 @@
 
             .review-card:hover {
                 transform: none;
+            }
+        }
+
+        /* ==========================================
+           NAVBAR MOBILE — TRANSPARENTE NO TOPO
+           ========================================== */
+
+        @media (max-width: 768px) {
+
+            header {
+                transition:
+                    background-color 0.35s ease,
+                    box-shadow 0.35s ease,
+                    border-color 0.35s ease,
+                    padding 0.35s ease;
+            }
+
+            /* Início da página */
+            header:not(.header-scrolled) {
+                background: transparent;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                box-shadow: none;
+                border-bottom-color: transparent;
+            }
+
+            /* Após rolar */
+            header.header-scrolled {
+                background: rgba(253, 251, 247, 0.96);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--line);
+                box-shadow: 0 4px 32px rgba(10, 37, 64, 0.06);
             }
         }
     </style>
